@@ -10,3 +10,5 @@ wheels/
 .venv
 .env
 bot.py
+.DS_Store
+cinema_showings.json

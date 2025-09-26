@@ -3,9 +3,7 @@ import os
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
-from main import (
-    compare,
-)  # Make sure Python can find main.py in parent dir
+from playwright_compare import compare
 
 # Load environment variables from .env
 load_dotenv()
@@ -25,9 +23,10 @@ async def on_ready():
     # Fetch channel (use fetch_channel to avoid caching issues)
     channel = await bot.fetch_channel(CHANNEL_ID)
 
-    # Run scraper and get results
-    matches = compare()  # synchronous scraper
-    if not matches:
+    matches = await compare()
+    if matches:
+        results = "\n".join(matches)
+    else:
         results = "No matches today 🎥"
 
     # Send results to Discord
